@@ -57,10 +57,10 @@ pip-wheel-metadata/
 *.whl
 
 # Ignore Dockerfile and docker-compose files
-Dockerfile
-docker-compose.yml
-db.dockerfile
-Dockerfile.dev
+
+
+
+
 # Ignore node_modules if using Node.js
 node_modules/
 
