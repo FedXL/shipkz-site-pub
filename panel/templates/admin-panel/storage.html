@@ -1,0 +1,43 @@
+     <div class="table-row">
+                <div class="table-cell">
+                    <a href="{{order_data.order_data.order_link}}">
+                    {{ order_id }}
+                    </a>
+                    <input type="checkbox" name="order_id" id="order_{{order_id}}" value="{{order_id}}">
+                </div>
+                <div class="table-cell">
+                    <a href="{{order_data.order_data.client_link}}">{{ order_data.order_data.client}} | {{order_data.order_data.client_hint}}</a>
+                </div>
+                <div class="table-cell">{{ order_data.order_data.order_date }}</div>
+                <div class="table-cell">{{ order_data.order_data.shop }}</div>
+                <div class="table-cell">{{ order_data.order_data.order_sum }}</div>
+                <div class="table-cell">{{ order_data.order_data.order_currency }}</div>
+                <div class="table-cell">{{ order_data.order_data.store_order_number }}</div>
+
+                <div class="table-cell">
+                    <a href="{{order_data.order_data.buyer_link}}">{{ order_data.order_data.buyer}}</a>
+                </div>
+
+                <div class="table-cell">
+                    {% if order_data.order_data.is_forward %}
+                    {{ order_data.order_data.forward_name }}
+                    {% else %}
+                    не форвардер
+                    {% endif %}
+                </div>
+
+                <div class="table-cell">
+                    {% if order_data.order_data.is_forward %}
+                     форвардер
+                    {% else %}
+                    {{ order_data.order_data.post_service }}
+                    {% endif %}
+                </div>
+                    <div class="table-cell">{{ order_data.order_data.trek }}</div>
+                    <div class="table-cell">{{ order_data.order_data.estimated_date_of_arrival }}</div>
+                    <div class="table-cell">{{ order_data.order_data.payment_card }}</div>
+                    <div class="table-cell">{{order_data.order_data.buyer_reward}}</div>
+                    <div class="table-cell">{{order_data.order_data.cdek}}</div>
+                    <div class="table-cell">{{order_data.order_data.comment}}</div>
+                    <div class="table-cell">{{order_data.order_data.is_delivery_payment}}</div>
+                </div>

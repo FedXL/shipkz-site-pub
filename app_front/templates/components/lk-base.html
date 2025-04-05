@@ -1,0 +1,193 @@
+{% extends 'components/base.html' %}
+{% block title %}Личный кабинет{% endblock %}
+{% block content %}
+{% load static %}
+
+<script>
+    const wsUrl = '{{ wss_url|safe }}';
+</script>
+<style>
+    .lk-container {
+        display: grid;
+        grid-template-columns: 200px 1fr; /* Левая колонка фиксированная, правая — гибкая */
+        grid-gap: 20px;
+        margin-top: 20px;
+    }
+    .lk-nav-container {
+        grid-column: 1; /* Исправлено на правильный синтаксис */
+        background-color: white;
+
+        border-radius: 8px;
+
+        display: flex;
+        flex-direction: column;
+    }
+    .lk-menu-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    margin: 4px;
+    padding: 10px;
+    text-decoration: none;
+
+    color: var(--main-color);
+    text-align: center;
+    border: 3px solid var(--main-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    white-space: nowrap;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .lk-menu-item:hover, .lk-menu-item.active {
+        background-color: var(--dark-theme);
+        border: 3px solid var(--dark-theme);
+        color: white;
+    }
+    .lk-content-container {
+        grid-column: 2;
+        background-color: white;
+        padding: 5px;
+        border: 3px solid var(--main-color);
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        color: #666666;
+    }
+    .lk-content-container .order-form {
+    box-shadow: none;
+
+}
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 768px) {
+        .lk-container {
+            grid-template-columns: 1fr;
+        }
+
+        .lk-nav-container {
+            flex-direction: row;
+            flex-wrap: wrap;
+            grid-column: 1;
+        }
+        .lk-content-container {
+            grid-column: 1;
+        }
+    }
+
+
+.createSignalLK {
+    animation: flicker-border 1.5s infinite alternate;
+    border: 3px solid
+    border-radius: 5px;
+}
+
+@keyframes flicker-border {
+    0% {
+        border-color: var(--yellow-theme);
+        color: var(--yellow-theme);
+    }
+    100% {
+        border-color: var(--main-color); /* Конечный цвет */
+        color: var(--main-color);
+    }
+}
+.unread-messages-counter {
+    display: none;
+    margin-left: 5px;
+    height: 25px;
+    width: 25px;
+    right: 12px;
+    background-color: var(--main-color);
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center; /* Center vertically */
+    justify-content: center;
+}
+
+.banner {
+    display: flex;
+    width: 100%;
+    height: 150px;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.banner-part {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-colored {
+    background-color: transparent;
+}
+
+.no-colored .banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.colored {
+    background-color: var(--main-color);
+}
+
+.banner-text {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+.banner-part h1 {
+    margin: 5px;
+}
+@media (max-width: 420px) {
+    .banner-part h1 {
+        font-size: 18px;
+    }
+
+}
+@media (max-width:600px) {
+    .hide-on-small {
+        display: none;
+    }
+}
+
+
+</style>
+   <a href="{% url 'vinyl'%}">
+    <div class="banner">
+        <div class="banner-part no-colored">
+            <img src="{% static 'images/vinyl2.jpg' %}" alt="Баннер" class="banner-img">
+        </div>
+        <div class="banner-part colored" >
+            <h1 class="banner-text">Выиграй 100 евро на Видеоконкурсе Винила. <span class="hide-on-small">Конкурс продлён до 30 апреля 2025 года.</span></h1>
+        </div>
+    </div>
+   </a>
+
+<div class="lk-container">
+    <div class="lk-nav-container">
+        <a class="lk-menu-item" href="{% url 'lk-create-order' %}">Оформить заявку</a>
+        <a class="lk-menu-item" href="{% url 'lk-orders' %}">Ваши заказы</a>
+        <a class="lk-menu-item" href="{% url 'lk-pre-orders' %}">Ваши заявки</a>
+        <a class="lk-menu-item" id="lk-message-button" href="{% url 'lk-messages' %}">
+            Сообщения
+            <div class="unread-messages-counter" id="unread-messages-counter">1</div>
+        </a>
+        <a class="lk-menu-item" href="#">Счет</a>
+        <a class="lk-menu-item" href="{% url 'lk-profile' %}">Ваш профиль</a>
+        <a class="lk-menu-item" href="{% url 'lk-logout' %}">Выход</a>
+    </div>
+    <div class="lk-content-container">
+        {% block lk_content %}
+        {% endblock %}
+    </div>
+</div>
+
+{% endblock %}

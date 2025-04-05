@@ -1,0 +1,19 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /lk/
+Disallow: /warning_messages/
+Disallow: /unique_username/
+Disallow: /unreg_auth_token/
+Disallow: /repair_password/
+Disallow: /confirm_repair_password/
+Disallow: /auth/
+
+
+Allow: /
+Allow: /tranzit-kz/
+Allow: /tradeinn/
+Allow: /about/
+Allow: /tariff/
+Allow: /vinyl/
+
+Sitemap: https://shipkz.ru/sitemap.xml

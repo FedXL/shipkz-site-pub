@@ -1,0 +1,115 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<form method="post" class="order-form" action="{%url 'lk-create-order'%}">
+    {% csrf_token %}
+
+    <div class="form-country">
+        {% for choice in form.country %}
+            <label class="radio-img" for="radio-{{ choice.data.value }}">
+                <input type="radio" id="radio-{{ choice.data.value }}" name="country" value="{{ choice.data.value }}" style="display:none;"
+                       {% if choice.data.value == form.country.value %} checked {% endif %} required>
+                <img src="{% static '/images/flags' %}/{{ forloop.counter }}.jpg?v={{ version }}" title="{{ choice.choice_label }}">
+            </label>
+        {% endfor %}
+    </div>
+
+           {% if form.errors %}
+        <ul class="error-list">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {{ formset.management_form }}
+    <div id="formset-container">
+        {% for form in formset %}
+            <div class="row-container">
+                <div class="input-container">
+                    <span class="input_explain">{{form.goods_link.label}}</span>
+                    {{form.goods_link}}
+                </div>
+                <div class="input-container">
+                    <span class="input_explain">{{form.count.label}}</span>
+                    {{form.count}}
+                </div>
+                <div class="input-container">
+                    <span class="input_explain">{{form.comment.label}}</span>
+                    {{form.comment}}
+                </div>
+
+    {% if formset.errors %}
+        <ul class="error-list">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+                <button class="control-form-button remove-form" type="button">Удалить товар</button>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="button-container" style="display:flex;">
+
+
+        <button class="submit-button" type="button" id="add-form">Добавить Товар</button>
+        <button class="submit-button plus" type="submit">Заказать</button>
+    </div>
+    <br>
+    <p>Минимальный заказ при транзите через Казахстан 100$</p>
+
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addFormButton = document.getElementById('add-form');
+        const formsetContainer = document.getElementById('formset-container');
+        let formCount = "{{ formset.total_form_count }}"; // начальное количество форм
+        const maxForms = 10; // максимальное количество форм
+
+        function updateManagementForm() {
+            const totalForms = document.querySelector('#id_form-TOTAL_FORMS');
+            totalForms.value = formCount; // обновляем общее количество форм
+        }
+
+        addFormButton.addEventListener('click', function () {
+            if (formCount < maxForms) {
+                const newForm = formsetContainer.children[0].cloneNode(true); // клонируем первую форму
+                const inputs = newForm.querySelectorAll('input, select, textarea');
+
+                inputs.forEach(input => {
+                    const name = input.name.replace(/-\d+-/, `-${formCount}-`); // обновляем имя
+                    input.name = name;
+                    input.id = name;
+                    input.value = ''; // очищаем значение
+                });
+
+                formsetContainer.appendChild(newForm);
+                formCount++;
+                updateManagementForm(); // обновляем управление формами
+            } else {
+                alert('Максимальное количество товара (10).');
+            }
+        });
+
+        formsetContainer.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-form')) {
+                const formRow = e.target.closest('.row-container');
+                if (formRow) {
+                    if (formsetContainer.children.length > 1) { // проверяем, что больше одной формы
+                        formRow.remove();
+                        formCount--;
+                        updateManagementForm(); // обновляем управление формами
+                    } else {
+                        alert('Нельзя удалить последний товар.');
+                    }
+                }
+            }
+        });
+    });
+</script>

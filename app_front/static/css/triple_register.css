@@ -1,0 +1,112 @@
+.text-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+
+.triple-box-container {
+    display: flex;
+    margin: 10px;
+    flex-wrap: wrap;
+    min-width: 80%;
+
+}
+
+
+.one-box-container {
+    flex: 1 1 250px;
+
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 20px;
+}
+
+.one-box-container h3 {
+    display: block;
+    align-self: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.one-box-container p {
+    padding: 10px;
+    text-align: justify;
+}
+
+.h3-wrapper {
+    display: flex;
+    width : 100%;
+    align-items: center;
+}
+
+.triple-image-container {
+    margin: 10px;
+    margin-top:20px;
+    width: 150px;
+    height: 150px;
+    align-self: center;
+    displey: flex;
+}
+
+.triple-image-container img {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: contain;
+}
+
+.triple-title{
+    font-weight: bold;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 21px;
+    color:#444444;
+}
+
+
+.botton-register-container {
+
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  display: flex; /* Используем flexbox */
+  flex-direction: column; /* Размещаем элементы по вертикали */
+  justify-content: center; /* Вертикальное выравнивание */
+  align-items: center; /* Горизонтальное выравнивание */
+  text-align: center;
+  margin-bottom: 80px;
+  margin-top: 50px;
+}
+
+.triple-box-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  padding: 10px;
+  max-width: 300px;
+  background-color: var(--yellow-theme);
+  color: black;
+  border: none;
+  border-radius: 10px; /* Закругление углов */
+  cursor: pointer; /* Указатель при наведении */
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.go-and-register {
+  font-size: 21px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+
+
+.triple-box-button:hover {
+  color: white; /* Изменение цвета текста при наведении */
+  background-color: var(--dark-theme); /* Изменение цвета кнопки при наведении */
+}

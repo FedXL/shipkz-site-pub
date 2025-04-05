@@ -1,0 +1,36 @@
+    .progress-item {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
+    .progress-full {
+        border-radius: 5px;
+
+        background-color: var(--main-color);
+    }
+    .progress-empty{
+        border-radius: 5px;
+
+        background-color: transparent;
+        border: 3px solid var(--main-color);
+        opacity: 0.5;
+    }
+
+
+.order-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid var(--main-color);
+
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+.order-container:hover{
+    background-color: var(--dark-theme);
+    color: white;
+}

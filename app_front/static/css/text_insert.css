@@ -1,0 +1,54 @@
+   p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+ul li {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+ul li:before {
+    content: "• "; /* Используем маркер вместо стандартного */
+   /* Синий цвет для маркера */
+}
+
+.strong-theme-text {
+    color: var(--main-color); /* Выделение важного текста */
+    font-weight: bold;
+}
+
+
+.content-block p,
+.content-block li {
+    color: #666666;
+}
+
+.low-text-content {
+    color: #666666;
+}
+.strong-text-content{
+    color: #444444;
+    font-weight: bold;
+}
+
+
+h2 {
+    color: #444444;
+    font-weight: normal;
+    font-size: 32px;
+
+    margin-bottom: 32px;
+    margin-top: 32px;
+
+}
+h3 {
+    color: #444444;
+}

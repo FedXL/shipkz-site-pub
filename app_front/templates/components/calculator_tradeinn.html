@@ -1,0 +1,52 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/calculator.css' %}">
+<div class="calculator-container">
+    <div class="calculator" id="MyCalculator2">
+        <h2>Расчет заказа при доставке магазина в Казахстан</h2>
+        <div class="form-container">
+            <label for="currency2">Валюта</label>
+            <select id="currency2" name="currency">
+                <option value="USD">USD - Доллар</option>
+                <option value="EUR">EUR - Евро</option>
+            </select>
+
+            <label for="order-value2">Стоимость заказа</label>
+
+            <div class="input-group">
+                <span class="input-prefix currency-prefix cal2">none</span>
+                <input type="number" id="order-value2" class="input-field">
+                <span class="input-suffix currency-suffix cal22">none</span>
+            </div>
+
+            <label for="order-value2">Стоимость доставки в Казахстан</label>
+
+            <div class="input-group">
+                <span class="input-prefix currency-prefix cal2">none</span>
+                <input type="number" id="order-delivery-value2" class="input-field">
+                <span class="input-suffix currency-suffix cal22">none</span>
+            </div>
+            <br>
+            <button class="calculators-button" id="calculate2">Рассчитать</button>
+        </div>
+</div>
+<div class="result-container" id="Calculator2-result" style="display: none;">
+    <h2>Результат расчета</h2>
+    <div id="results2Container">
+    </div>
+    <div class="result-buttons">
+            <button class="calculators-button" id='TryAgain2' type="button">Ещё раз</button>
+            {% if user.is_authenticated %}
+                <a href = "{% url 'lk-create-order' %}">
+                 <button class="calculators-button" type="button">Сделать заказ</button>
+                </a>
+            {% else %}
+                <a href = "{% url 'order-alone-page' %}" >
+                    <button class="calculators-button" type="button">Сделать заказ</button>
+                </a>
+            {% endif %}
+        </div>
+</div>
+</div>
+<script src="{% static 'js/calculator2.js' %}">
+</script>
+

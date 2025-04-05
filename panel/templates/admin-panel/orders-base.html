@@ -1,0 +1,292 @@
+{% extends 'admin-panel/base.html' %}
+{% load static %}
+{% block title %}Панель администратора{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/progress_bar.css' %}">
+<style>
+.table {
+    display: table;
+    width: 100%;
+}
+
+.table-row {
+    display: table-row;
+    width: 100%;
+}
+
+.table-cell {
+    display: table-cell;
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+}
+</style>
+
+
+<link rel="stylesheet" href="{% static 'css/text_insert.css' %}">
+<style>
+    .messages {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .messages li {
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 2px solid;
+        border-radius: 5px;
+    }
+
+    .error {
+        color: rgba(255, 0, 0, 0.55);
+        background-color: #fdd;
+    }
+    .success {
+        color: #0daaaf;
+        background-color: #dfd;
+    }
+</style>
+
+{% if messages %}
+<h2>У вас есть новые уведомления:</h2>
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<h2>Заказы-Транзит</h2>
+<h3>{{title}}</h3>
+
+{% include 'components/transit-panel.html' %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    <form method="get" action="" style="display: inline;">
+        <input type="number" name="page" min="1" max="{{ page_obj.paginator.num_pages }}" value="{{ page_obj.number }}" required>
+        <button type="submit">Go</button>
+    </form>
+</div>
+
+<style>
+
+    .row-flex {
+        display: flex;
+        flex-direction: row;
+    }
+    .row-flex a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .link-container {
+    display: inline-block;
+    background-color: var(--main-color);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px; /* Скругление углов (опционально) */
+    text-align: center; /* Центрирование текста по горизонтали */
+    padding: 5px; /* Отступ внутри квадрата */
+
+    transition: background-color 0.3s ease; /* Анимация при наведении */
+}
+    .link-container:hover {
+        background-color: var(--dark-theme);
+    }
+
+</style>
+<style>
+    .custom-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px; /* Размер текста */
+}
+
+
+.custom-checkbox span {
+    display: inline-block;
+    width: 24px; /* Ширина чекбокса */
+    height: 24px; /* Высота чекбокса */
+    border: 2px solid var(--main-color, #007BFF); /* Цвет границы */
+    border-radius: 4px; /* Скругление углов */
+    margin-right: 8px; /* Отступ между текстом и чекбоксом */
+    background-color: transparent; /* Фон по умолчанию */
+    transition: all 0.3s ease; /* Плавный переход для эффектов */
+}
+
+
+.custom-checkbox input[type="checkbox"]:checked + span {
+    background-color: var(--main-color, #007BFF); /* Заливка */
+    position: relative;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + span::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 9px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+</style>
+
+
+<form id="table-form" method="post">
+    {% csrf_token %}
+    <div class="table">
+        <div class="table-row">
+            {% for column_name in columns %}
+                <div class="table-cell">{{ column_name }}</div>
+            {% endfor %}
+        </div>
+
+        {% for row_id, row_data in rows.items %}
+
+            <div class="table-row">
+                <div class="table-cell">
+                    <div class="row-flex">
+
+
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="row_id" class="row-checkbox" id="row_{{row_id}}" value="row_{{row_id}}">
+                            <span></span>
+                        </label>
+
+
+                        <div class="link-container">
+                        <a href="{{row_data.row_link}}">
+                            {{row_id}}
+                        </a>
+                            </div>
+                    </div>
+            </div>
+            <div class="table-cell">
+                {% for order_id, order_data in row_data.orders.items %}
+                    <div class="table-row">
+
+                        <div class="row-flex">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="order_id" class="order-checkbox" id="order_{{order_id}}" value="order_{{order_id}}">
+                                <span></span>
+                            </label>
+                            <div class="link-container">
+                                <a href="{{order_data.order_data.order_link}}">
+                                {{ order_id }}
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="table-cell">
+                {% for ori in row_data.ori%}
+                    <div class="table-row">
+                        <a href="{{ori.ori_link}}">
+                            <div class="order-container">
+                                {% for step in ori.progress_bar %}
+                                    {% if step.point_data %}
+                                        <div class="progress-item progress-full" title="{{step.point_data}} {{step.point_text}}">
+                                        </div>
+                                    {%else%}
+                                        <div class="progress-item progress-empty" title="{{step.point_text}}">
+                                        </div>
+                                    {%endif%}
+                                {% endfor %}
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="table-cell">
+                {% for order_id, order_data in row_data.orders.items %}
+                    <div class="table-row">
+
+                            <div class="link-container">
+                                <a href="{{order_data.order_data.client_link}}">
+                                    {{ order_data.order_data.client }} | {{order_data.order_data.client_hint}}
+                                </a>
+                            </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="table-cell">{{row_data.row_data.order_date}}</div>
+            <div class="table-cell">{{row_data.row_data.shop}}</div>
+            <div class="table-cell">{{row_data.row_data.order_sum}}</div>
+            <div class="table-cell">{{row_data.row_data.order_currency}}</div>
+            <div class="table-cell">{{row_data.row_data.store_order_number}}</div>
+            <div class="table-cell">{{row_data.row_data.buyer}})</div>
+            <div class="table-cell">{{row_data.row_data.forward_name}}</div>
+            <div class="table-cell">{{row_data.row_data.post_service}}</div>
+            <div class="table-cell">{{row_data.row_data.trek}}</div>
+            <div class="table-cell">{{row_data.row_data.estimated_date_of_arrival}}</div>
+            <div class="table-cell">{{row_data.row_data.payment_card}}</div>
+            <div class="table-cell">{{row_data.row_data.buyer_reward}}</div>
+
+            <div class="table-cell">
+                {% for order_id, order_data in row_data.orders.items %}
+                    <div class="table-row">
+                        <div class="table-cell">
+                            {{order_id}} - {{order_data.order_data.cdek}}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="table-cell">{{row_data.row_data.comment}}</div>
+            <div class="table-cell">{{row_data.row_data.is_delivery_payment}}</div>
+        </div>
+        {% endfor %}
+
+        <input id="selected-items" type="hidden" name="selected_items">
+        <input id="operation-type" type="hidden" name="operation_type">
+        <input id="status-choice-input" type="hidden" name="status_choice">
+        <button type='submit' id="table-form-submit-button" style="display: none;"></button>
+</div>
+</form>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    <form method="get" action="" style="display: inline;">
+        <input type="number" name="page" min="1" max="{{ page_obj.paginator.num_pages }}" value="{{ page_obj.number }}" required>
+        <button type="submit">Go</button>
+    </form>
+</div>
+{% endblock %}
+

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <link rel="stylesheet" href="{% static 'css/roboo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/drop.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/text_insert.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap">
+    {% block style_css %}
+    {% endblock %}
+<style>
+
+body {
+    font-family: 'El Messiri', sans-serif;
+}
+
+.custom-placeholder{
+    font-family: 'El Messiri', sans-serif;
+}
+
+::selection {
+    background-color:var(--main-color);
+    color: white;
+}
+.menu-button-frame {
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    transition: 0.3s;
+    margin: 10px;
+    padding: 10px;
+}
+    .logo-frame {
+    margin-left: 10px;
+    }
+</style>
+
+</head>
+<body>
+<script>
+    const AuthUserIs = '{{ user.is_authenticated }}';
+</script>
+{% if debug %}
+
+{% else %}
+    <script type="text/javascript">
+   (function(m,e,t,r,i,k,a){
+       m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();
+       for (var j = 0; j < document.scripts.length; j++) {
+           if (document.scripts[j].src === r) { return; }
+       }
+       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+   })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(92390629, "init", {
+       clickmap:true,
+       trackLinks:true,
+       accurateTrackBounce:true,
+       webvisor:true
+   });
+</script>
+<noscript>
+    <div>
+        <img src="https://mc.yandex.ru/watch/92390629" style="position:absolute; left:-9999px;" alt="" />
+    </div></noscript>
+{% endif %}
+
+   <header>
+        <nav>
+            <div class="short-menu ">
+                <strong class="logo-frame" style="font-size:20px;color:white;margin-top:auto;margin-bottom: auto;">ShipKZ</strong>
+                    <div class="menu-item logo-menu-item">
+                        <a href="https://t.me/shipKZ">
+                        <img class="logo-tele-icon" src="{%static 'images/telegram-icon.png' %}" alt="telegram">
+                        <span>Telegram</span>
+                        </a>
+                    </div>
+                <div class="menu-item">
+                    <button class="menu-button">
+                        <div class="menu-button-frame">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="50px" height="50px" fill-rule="nonzero">
+                            <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                                <g transform="scale(5.12,5.12)">
+                                    <path d="M0,9v2h50v-2zM0,24v2h50v-2zM0,39v2h50v-2z"></path>
+                                </g>
+                            </g>
+                        </svg>
+
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="long-menu">
+                {% if user.is_superuser %}
+                <div class="menu-item">
+                    <a href="{% url 'orders-transit' %}">Dashboard</a>
+                </div>
+                {% endif %}
+                <div class="menu-item">
+                    <a href="{% url 'home' %}">Главная</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'kazakhstan' %}">Транзит через Казахстан</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'trade_inn' %}">Tradeinn</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'about_us' %}">О нас</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'tariffs' %}">Тарифы</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'shops' %}">Магазины</a>
+                </div>
+                {% if user.is_authenticated %}
+                <div class="menu-item enter-item">
+                    <a href="{% url 'lk-start' %}">Личный кабинет</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'logout' %}">Выход</a>
+                </div>
+                {% else %}
+                <div class="menu-item enter-item">
+                    <a href="{% url 'login' %}">Войти</a>
+                </div>
+                {% endif %}
+                <div class="menu-item logo-menu-item lm-marker">
+                    <a href="https://t.me/shipKZ">
+                    <img class="logo-tele-icon" src="{%static 'images/telegram-icon.png' %}" alt="telegram">
+                    <span>Telegram</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        {% if image_flag %}
+        <div class="image-container">
+            <img class="image-background" src="{% static 'images/main_image.webp' %}" alt="ShipKZ" class="logo">
+        </div>
+        {% endif %}
+   </header>
+
+    <main>
+        <br>
+        <br>
+        {% block content %} {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 ShipKZ. All rights reserved.</p>
+        <a href="{% url 'callback' %}">Форма для обратной связи</a>
+    </footer>
+<script src="{% static 'js/header.js' %}"></script>
+
+<script>
+function addClickListener(elementId, yandexGoal, logMessage) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.addEventListener('click', function () {
+            ym(92390629, 'reachGoal', yandexGoal);
+            console.log(logMessage);
+        });
+    } else {
+        console.warn(`Element with ID ${elementId} not found.`);
+    }
+}
+
+
+addClickListener('signUpLink', 'clickToReg', 'clickToReg Go Go yandex metrica');
+addClickListener('submitButtonRegistration', 'startRegWay', 'clickToReg Go Go startRegWay');
+addClickListener('submitButtonUregOrderForm', 'createUnregisterOrder', 'clickToOrder Go Go yandex metrica');
+
+{% if user.is_authenticated %}
+{% else %}
+    addClickListener('messengerMiniButton', 'clickMessanger', 'clickMessanger Go Go yandex metrica');
+    addClickListener('messengerMiniButton2', 'clickMessangerAgain', 'clickMessanger Again yandex metrica');
+{% endif %}
+</script>
+</body>
+</html>

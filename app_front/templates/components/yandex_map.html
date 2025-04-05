@@ -1,0 +1,39 @@
+{% load static %}
+<style>
+#map-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+#map-image {
+     /* Изображение займет всю ширину контейнера */
+    cursor: pointer;
+    object-fit: cover; /* Изображение заполняет контейнер и обрезается */
+    object-position: center;
+}
+
+#map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+</style>
+
+<div id="map-container" class="map-container">
+    <!-- Статичная картинка -->
+    <img id="map-image" class="map-image" src="{% static 'images/yandex.png' %}" alt="Карта">
+</div>
+
+<script>
+document.getElementById("map-image").addEventListener("click", function() {
+    // Когда пользователь кликает по картинке, заменяем её на iframe
+    document.getElementById("map-container").innerHTML = `
+        <iframe src="https://yandex.ru/map-widget/v1/?z=12&amp;ol=biz&amp;oid=37517158718" width="100%" height="400" frameborder="0"></iframe>
+    `;
+});
+</script>

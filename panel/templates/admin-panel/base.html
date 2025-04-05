@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <link rel="stylesheet" href="{% static 'css/roboo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/drop.css' %}">
+    <link rel="stylesheet" href="{% static 'css/panel-base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/text_insert.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap">
+    {% block style_css %}
+    {% endblock %}
+<style>
+body {
+    font-family: 'El Messiri', sans-serif;
+}
+.custom-placeholder{
+    font-family: 'El Messiri', sans-serif;
+}
+
+::selection {
+    background-color:var(--main-color);
+    color: white;
+}
+
+</style>
+    <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-bundle.min.js"></script>
+</head>
+
+<body>
+
+<script>
+    const AuthUserIs = '{{ user.is_authenticated }}';
+</script>
+
+   <header>
+        <nav>
+            <div class="short-menu">
+                    <strong style="font-size:20px;color:white;margin-top:auto;margin-bottom: auto;">ShipKZ</strong>
+                <div class="menu-item logo-menu-item">
+                    <a href="https://t.me/shipKZ">
+                    <img class="logo-tele-icon" src="{%static 'images/telegram-icon.png' %}" alt="telegram">
+                    <span>Telegram</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <button class="menu-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="50px" height="50px" fill-rule="nonzero">
+                            <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                                <g transform="scale(5.12,5.12)">
+                                    <path d="M0,9v2h50v-2zM0,24v2h50v-2zM0,39v2h50v-2z"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="long-menu">
+                <div class="menu-item">
+                    <a href="{% url 'home' %}">Обратно на сайт</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'orders-transit' %}">Заказы-Транзит</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'orders-tradeinn' %}">Заказы-Tradeinn</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'buyers' %}">Байеры</a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'orders-statistic' %}">Статистика</a>
+                </div>
+            </div>
+        </nav>
+
+   </header>
+    <main>
+        <br>
+        <br>
+        {% block content %} {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 ShipKZ. All rights reserved.</p>
+        <a href="{% url 'callback' %}">Форма для обратной связи</a>
+    </footer>
+<script src="{% static 'js/header.js' %}"></script>
+
+</body>
+</html>

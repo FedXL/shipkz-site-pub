@@ -1,0 +1,31 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/triple_register.css' %}">
+<h2> Три шага к шоппингу без санкций </h2>
+    <div class="triple-box-container">
+        <div class="one-box-container">
+            <div class="triple-image-container">
+            <img src="{% static 'images/triple_register/1.jpg' %}" alt="weight">
+            </div>
+            <span class="triple-title">Регистрируйтесь</span>
+            <p>Получите возможность выкупа иностранных товаров.</p>
+        </div>
+        <div class="one-box-container">
+            <div class="triple-image-container">
+            <img src="{% static 'images/triple_register/2.png' %}" alt="weight">
+            </div>
+            <span class="triple-title">Покупайте</span>
+            <p>Наши менеджеры выкупят любые товары в США и Европе</p>
+        </div>
+        <div class="one-box-container">
+            <div class="triple-image-container">
+            <img src="{% static 'images/triple_register/3.jpg' %}" alt="weight">
+            </div>
+            <span class="triple-title">Получайте</span>
+            <p>Доставка в любую точку России</p>
+        </div>
+    </div>
+<div class="botton-register-container">
+    <strong class="go-and-register">Начните свой шоппинг прямо сейчас!</strong>
+    <a class="triple-box-button" id="signUpLink" href="{% url 'signup' %}">Зарегистрироваться</a>
+</div>
+

@@ -1,0 +1,101 @@
+{% extends 'components/base.html' %}
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+{% load static %}
+
+
+
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<div class="container">
+     
+    <form method="post" class="order-form">
+        {% csrf_token %}
+    <h2 class="mark-main-color">Регистрация</h2>
+            {% for field in form %}
+            <div class="row-container">
+                <div class="input-container">
+                    <label for="{{ field.id_for_label }}" class="input_explain">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            </div>
+            {% endfor %}
+        {% if form.errors %}
+        <ul class="error-list">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+        <button id="submitButtonRegistration" type="submit" class="submit-button">Регистрация</button>
+    </form>
+</div>
+
+
+
+
+
+<script>
+    const ApiUserNameCheck = "{% url 'check_for_unique_username' %}";
+    console.log(ApiUserNameCheck);
+
+    // Проверка уникальности имени пользователя
+    document.getElementById('id_username').addEventListener('blur', function() {
+        const username = this.value;
+        const rowContainer = this.closest('.row-container');
+
+        if (username) {
+            fetch(`${ApiUserNameCheck}?username=${encodeURIComponent(username)}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (!data.ok) {
+                    rowContainer.classList.remove('good-input'); // Удаляем класс good-input
+                    rowContainer.classList.add('bad-input'); // Добавляем класс bad-input
+
+                } else {
+                    rowContainer.classList.remove('bad-input'); // Удаляем класс bad-input
+                    rowContainer.classList.add('good-input'); // Добавляем класс good-input
+                }
+            })
+            .catch(error => console.error('Ошибка:', error));
+        }
+    });
+
+    // Проверка совпадения паролей
+    const passwordInput = document.getElementById('id_password');
+    const passwordConfirmInput = document.getElementById('id_password_confirm');
+
+    const checkPasswords = () => {
+        const rowContainer = passwordConfirmInput.closest('.row-container');
+        const rowContainer2 = passwordInput.closest('.row-container');
+
+        if (passwordInput.value && passwordConfirmInput.value) {
+            if (passwordInput.value === passwordConfirmInput.value) {
+                rowContainer.classList.remove('bad-input'); // Удаляем класс bad-input
+                rowContainer.classList.add('good-input');
+                rowContainer2.classList.remove('bad-input'); // Удаляем класс bad-input
+                rowContainer2.classList.add('good-input'); // Добавляем класс good-input
+                console.log('Пароли совпадают.');
+            } else {
+                rowContainer.classList.remove('good-input'); // Удаляем класс good-input
+                rowContainer.classList.add('bad-input');
+                rowContainer2.classList.remove('good-input'); // Удаляем класс good-input
+                rowContainer2.classList.add('bad-input');// Добавляем класс bad-input
+                console.log('Пароли не совпадают.');
+            }
+        } else {
+            // Если поля пустые, убираем оба класса
+            rowContainer.classList.remove('good-input', 'bad-input');
+        }
+    };
+
+    passwordInput.addEventListener('input', checkPasswords);
+    passwordConfirmInput.addEventListener('input', checkPasswords);
+
+
+</script>
+
+
+{% endblock %}

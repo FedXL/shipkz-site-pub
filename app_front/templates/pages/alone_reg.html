@@ -1,0 +1,24 @@
+{% extends 'components/base.html' %}
+{% block title %}Форма заказа{% endblock %}
+{% block content %}
+{% load static %}
+<h1>Сделать заказ</h1>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<div class="content-block">
+    {% include 'components/reg_form.html' %}
+</div>
+
+{% include 'components/mini_messanger.html' %}
+<script>
+    const wsUrl = '{{ wss_url|safe }}';
+</script>
+<script src="{% static 'js/messanger/support_wss.js' %}">
+</script>
+{% endblock %}

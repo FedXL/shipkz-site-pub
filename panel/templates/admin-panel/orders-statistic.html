@@ -1,0 +1,71 @@
+{% extends 'admin-panel/base.html' %}
+
+{% load static %}
+{% block title %}Статистика{% endblock %}
+{% block content %}
+
+
+<h2>Транзит</h2>
+<div id="container2" style="width: 100%; height: 400px;"></div>
+<div id="container3" style="width: 100%; height: 400px;"></div>
+<h2>Tradeinn</h2>
+<div id="container" style="width: 100%; height: 400px;"></div>
+
+{% include 'components/calculator_tradeinn.html' %}
+
+
+
+<script>
+    var data = {{tradeinn_graph|safe}};
+    var transit_web_all = {{transit_web_all_graph|safe}};
+    var transit_web_confirm = {{transit_web_confirm_graph|safe}};
+
+    var transitTelegramAll = {{transit_telegram_all_graph|safe}};
+    console.log(transitTelegramAll);
+    var transitTelegramConfirm = {{transit_telegram_confirm_graph|safe}};
+    console.log(transitTelegramConfirm);
+    anychart.onDocumentReady(function() {
+        // График 1
+        var chart1 = anychart.column();
+        chart1.data(data);
+        chart1.container('container');
+        chart1.title("TradeInn все заявки");
+        chart1.draw();
+
+
+        var chart2 = anychart.column();
+        var series1 = chart2.column(transit_web_all);
+        series1.name("Transit Web All");
+        var series2 = chart2.column(transit_web_confirm);
+        series2.name("Transit Web Confirm");
+
+        chart2.container('container2');
+        chart2.title("Web-заявки/оплаченные-заявки");
+        chart2.legend(true);
+
+        chart2.xAxis().title("Месяц");
+        chart2.yAxis().title("Значение");
+        chart2.draw();
+
+
+        var chart3 = anychart.column();
+        var series3 = chart3.column(transitTelegramAll);
+        series3.name("Transit Telegram All");
+        var series4 = chart3.column(transitTelegramConfirm);
+        series4.name("Transit Telegram Confirm");
+
+        chart3.container('container3');
+        chart3.title("Bot-заявки/оплаченные-заявки");
+        chart3.legend(true);
+
+        chart3.xAxis().title("Месяц");
+        chart3.yAxis().title("Значение");
+        chart3.draw();
+
+    });
+</script>
+
+
+
+
+{% endblock %}

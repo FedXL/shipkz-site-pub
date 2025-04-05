@@ -1,0 +1,45 @@
+{% extends 'components/base.html' %}
+{% block meta_description %}Ошибка CSRF - Возможные проблемы с WebView и Safari{% endblock %}
+{% block title %}Ошибка безопасности CSRF{% endblock %}
+{% block content %}
+{% load static %}
+
+<style>
+    .error-container {
+        text-align: center;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-size: 18px;
+        line-height: 1.6;
+    }
+    .error-title {
+        font-size: 32px;
+        font-weight: bold;
+        color: #d9534f;
+    }
+    .error-message {
+        margin-top: 20px;
+        color: #333;
+    }
+    .error-suggestion {
+        margin-top: 30px;
+        font-weight: bold;
+        color: var(--main-color);
+    }
+</style>
+
+<div class="error-container">
+    <h1 class="error-title">Ошибка безопасности CSRF</h1>
+    <p class="error-message">
+        К сожалению, мы не смогли подтвердить вашу сессию. Это может быть связано с ограничениями вашего браузера.
+    </p>
+    <p class="error-suggestion">
+        Мы рекомендуем использовать Google Chrome, Firefox или Яндекс-Браузер для лучшей совместимости.
+    </p>
+</div>
+
+{% endblock %}

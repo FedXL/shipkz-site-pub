@@ -1,0 +1,23 @@
+{% extends 'components/base.html' %}
+{% block title %}Наши контакты{% endblock %}
+{% block meta_description %}
+{% endblock %}
+{% block content %}
+{% load static %}
+    <h2>Наши контакты</h2>
+{% include 'components/yandex_map.html' %}
+<br><br><br>
+    <p style="text-align: center;">
+        г. Алматы, ул. Жуалы 17<br>
+        тел: +7 747 107 2618<br>
+        телеграмм-канал: <a href="https://t.me/shipkz">@shipkz</a><br>
+        телеграмм: <a href="https://t.me/shipkz_bot">@shipkz_bot</a>
+    </p>
+{% include 'components/mini_messanger.html' %}
+
+<script>
+    const wsUrl = '{{ wss_url|safe }}';
+</script>
+<script src="{% static 'js/messanger/support_wss.js' %}">
+</script>
+{% endblock %}

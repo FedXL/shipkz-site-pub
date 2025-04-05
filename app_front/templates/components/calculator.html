@@ -1,0 +1,95 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/calculator.css' %}">
+
+<div class="calculator-container">
+    <div class="calculator" id="MyCalculator">
+        <h2>Расчет заказа</h2>
+        <div class="form-container">
+            <div class = "CountryChoice">
+                <label for="europe">Европа</label>
+                <input type="radio" id="europe" name="country" value="EUROPE">
+                <label for="usa">США</label>
+                <input type="radio" id="usa" name="country" value="USA">
+            </div>
+            <label for="currency">Валюта</label>
+
+            <select id="currency" name="currency">
+                <option value="USD">USD - Доллар</option>
+                <option value="EUR">EUR - Евро</option>
+            </select>
+
+            <label for="order-value">Стоимость заказа</label>
+            <div class="input-group">
+                <span class="input-prefix currency-prefix">none</span>
+                <input type="number" id="order-value" class="input-field">
+                <span class="input-suffix currency-suffix">none</span>
+            </div>
+
+            <div class="DeliverySection" id="DeliverySection" style="display:none;" >
+                <div id = "DeliveryChoice" class="DeliveryPrice">
+                    <label >Стоимость доставки в Казахстан</label>
+                    <div class="input-group">
+                        <span class="input-prefix currency-prefix">none</span>
+                        <input type="number" id="deliveryCost" class="input-field">
+                        <span class="input-suffix currency-suffix">none</span>
+                    </div>
+                </div>
+                <div class = "wightContainer" id="weightContainer">
+                    <label >Вес заказа</label>
+                    <div class="input-group">
+                        <span class="input-prefix">⚖️</span>
+                        <input type="number" id="order-weight" class="input-field">
+                        <span class="input-suffix">кг</span>
+                    </div>
+                </div>
+                <div id="sizeContainer">
+                    <label id = "sizeLabel">Объёмный вес</label>
+                    <div class="sizeContainer" >
+                        <div class="input-group">
+                            <span class="input-prefix">📐</span>
+                            <input type="number" id="height" class="input-field" placeholder="Высота">
+                            <span class="input-suffix">см</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-prefix">📐</span>
+                            <input type="number" id="length" class="input-field" placeholder="Длина">
+                            <span class="input-suffix">см</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-prefix">📐</span>
+                            <input type="number" id="width" class="input-field" placeholder="Ширина">
+                            <span class="input-suffix">см</span>
+                        </div>
+                        <label id = "sizeLabelNumber"> 0кг</label>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="calculators-button" id="calculate">Рассчитать</button>
+        </div>
+    </div>
+    <div class="result-container" id="MyResult" style="display: none;">
+        <div id="resultContainer">
+            <h2>Результат расчета</h2>
+        </div>
+        <div class="result-buttons">
+            <button class="calculators-button" id='TryAgain' type="button">Ещё раз</button>
+            {% if user.is_authenticated %}
+                <a href = "{% url 'lk-create-order' %}">
+                 <button class="calculators-button" type="button">Сделать заказ</button>
+                </a>
+            {% else %}
+                <a href = "{% url 'order-alone-page' %}" >
+                    <button class="calculators-button" type="button">Сделать заказ</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    var ExchangeRates = '{{data.exchange_rate | safe}}';
+     ExchangeRates = JSON.parse(ExchangeRates);
+</script>
+<script src="{% static 'js/calculator.js' %}"></script>
+

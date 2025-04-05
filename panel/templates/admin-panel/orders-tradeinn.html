@@ -1,0 +1,71 @@
+{% extends 'admin-panel/base.html' %}
+{% load static %}
+{% block title %}Панель администратора{% endblock %}
+{% block content %}
+<style>
+.table {
+    display: table;
+    width: 100%;
+}
+
+.table-row {
+    display: table-row;
+    width: 100%;
+}
+
+.table-cell {
+    display: table-cell;
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+}
+</style>
+
+<h2>Заказы-Tradeinn</h2>
+<h3>{{title}}</h3>
+
+<div class="table">
+    <div class="table-row">
+        {% for column_name in columns %}
+            <div class="table-cell">{{ column_name }}</div>
+        {% endfor %}
+    </div>
+    {% for row_id, row_data in rows.items %}
+                <div class="table-row">
+                        <div class="table-cell">
+                            <a href="{{row_data.order_link}}">
+                                {{ row_id }}
+                            </a>
+                            </div>
+                            <div class="table-cell">
+                                <a href="{{row_data.client_link}}">
+                                    {{ row_data.client }}
+                                </a>
+                            </div>
+                        <div class="table-cell">{{row_data.order_date }}</div>
+                        <div class="table-cell">{{row_data.status}}</div>
+                        <div class="table-cell">{{row_data.order_price}}</div>
+                        <div class="table-cell">{{row_data.manager}}</div>
+                    </div>
+        {% endfor %}
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    <form method="get" action="" style="display: inline;">
+        <input type="number" name="page" min="1" max="{{ page_obj.paginator.num_pages }}" value="{{ page_obj.number }}" required>
+        <button type="submit">Go</button>
+    </form>
+</div>
+{% endblock %}

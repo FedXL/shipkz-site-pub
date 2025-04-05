@@ -1,0 +1,68 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<form class="order-form" method="post">
+    {% csrf_token %}
+    <span class="input_explain">{{form.country.label}}</span>
+    <div class = "row-container">
+        <div class="form-country">
+            {% for choice in form.country %}
+                <label class="radio-img" for="radio-{{ choice.data.value }}">
+                    <input type="radio" id="radio-{{ choice.data.value }}" name="country" value="{{ choice.data.value }}" style="display:none;"
+                       {% if choice.data.value == form.country.value %} checked {% endif %} required>
+                    <img src="{% static '/images/flags' %}/{{forloop.counter}}.jpg" title="{{ choice.choice_label }}">
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row-container">
+        <div class="input-container">
+            <span class = "input_explain">{{form.url.label}}</span>
+            {{form.url}}
+        </div>
+    </div>
+    <div class="row-container">
+        <div class="input-container">
+            <span class = "input_explain">{{form.price.label}}</span>
+            {{form.price}}
+        </div>
+        <div class="input-container">
+            <span class = "input_explain">{{form.count.label}}</span>
+            {{form.count}}
+        </div>
+    </div>
+    <div class="row-container">
+        <div class="input-container">
+            <span class = "input_explain">{{form.comment.label}}</span>
+            {{form.comment}}
+        </div>
+    </div>
+    <div class="row-container">
+        <div class="input-container">
+            <span class = "input_explain">{{form.email.label}}</span>
+            {{form.email}}
+        </div>
+        <div class="input-container">
+            <span class = "input_explain">{{form.phone.label}}</span>
+            {{form.phone}}
+        </div>
+    </div>
+    <div class="row-container">
+
+        <div class="input-container">
+            <span class = "input_explain">{{form.captcha.label}}</span>
+            {{form.captcha}}
+        </div>
+    </div>
+    {% if form.errors %}
+    <ul class="error-list">
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                <li>{{field}} {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endif %}
+    <button id="submitButtonUregOrderForm" class="submit-button" type="submit">Заказать</button>
+    <br>
+    <p>Минимальный заказ при транзите через Казахстан 100$</p>
+</form>

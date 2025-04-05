@@ -1,0 +1,113 @@
+<style>
+/* Общие стили для контейнера */
+.control-panel-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+/* Стили для групп кнопок */
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+/* Стили кнопок */
+.btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #2a6496; /* Основной цвет кнопок Django */
+    border: 1px solid #204d74; /* Граница кнопки */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Эффект наведения */
+.btn:hover {
+    background-color: #204d74;
+}
+
+/* Стили для кнопки "Удалить" */
+.delete-btn {
+    background-color: #d9534f; /* Красный цвет для удаления */
+    border-color: #d43f3a;
+}
+
+/* Эффект наведения для кнопки "Удалить" */
+.delete-btn:hover {
+    background-color: #c9302c;
+}
+
+</style>
+
+<div class="control-panel-container">
+    <div class="button-group">
+        <button onclick="submitForm('table-form-submit-button','move')" class="btn">Переместить</button>
+        <a href="http://127.0.0.1/admin/panel/ordersgroup/add/"><button class="btn">Добавить Строку</button></a>
+    </div>
+    <div class="button-group">
+    <button class="btn" onclick="submitForm('table-form-submit-button', 'status')">Изменить Статус</button>
+    <select id="status-choice" name="status-choice">
+        <option value="paid">Выкуплен в магазине</option>
+        <option value="arrived_to_forward">Прибыл к форвардеру</option>
+        <option value="got_track">Отправлен в Казахстан</option>
+        <option value="arrived_to_host_country">Прибыл в Казахстан(Кыргызстан) </option>
+        <option value="received_in_host_country">Получен в Казахастане(Кыркызстан)</option>
+        <option value="send_to_ru">Отправлен в Россию</option>
+        <option value="success">Клиент получил заказ</option>
+    </select>
+</div>
+</div>
+
+<script>
+  function submitForm(formId,WhatToDo) {
+  console.log('submitForm');
+  console.log(formId);
+    const submit_button = document.getElementById(formId);
+    const operationType = document.getElementById('operation-type');
+    const changeStatus = document.getElementById('status-choice');
+    const changeStatusInput = document.getElementById('status-choice-input');
+    changeStatusInput.value = changeStatus.value;
+    operationType.value = WhatToDo;
+
+    if (submit_button) {
+        const selectedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        console.log(selectedCheckboxes);
+        const selectedValues = Array.from(selectedCheckboxes)
+            .map(cb => cb.value)
+            .join(',');
+
+        console.log(selectedValues);
+        let SelectedItems = document.getElementById('selected-items');
+        console.log(SelectedItems);
+        SelectedItems.value = selectedValues;
+        console.log(SelectedItems);
+        submit_button.click();
+    }
+  }
+</script>
+<script>
+    function changeStatus() {
+        console.log('changeStatus');
+        const selectedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        console.log(selectedCheckboxes);
+        const selectedValues = Array.from(selectedCheckboxes)
+            .map(cb => cb.value)
+            .join(',');
+        selectedValues.append = '
+        console.log(selectedValues);
+        let SelectedItems = document.getElementById('selected-items');
+        console.log(SelectedItems);
+        SelectedItems.value = selectedValues;
+        console.log(SelectedItems);
+        submit_button.click();
+    }
+</script>
+
+

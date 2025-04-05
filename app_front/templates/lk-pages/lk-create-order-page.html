@@ -1,0 +1,14 @@
+{% extends 'components/lk-base.html' %}
+{% load static %}
+{% block lk_content %}
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% include 'components/reg_form.html' %}
+<script src="{% static 'js/messanger/support_wss.js' %}">
+</script>
+{% endblock %}

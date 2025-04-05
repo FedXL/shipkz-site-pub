@@ -1,0 +1,103 @@
+{% extends 'admin-panel/base.html' %}
+{% load static %}
+{% block title %}Панель администратора{% endblock %}
+{% block content %}
+<style>
+    .profile-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        gap: 20px; /* Space between blocks */
+        margin: 20px; /* Space around the whole container */
+        padding: 20px; /* Internal padding */
+    }
+    .obj-container {
+        background-color: #f4f4f4;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .obj-container h3 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .table-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table-cell {
+        font-size: 16px;
+        color: #555;
+    }
+
+    .table-cell:first-child {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .table-row:last-child {
+        border-bottom: none;
+    }
+</style>
+
+<h2>Просмотр профиля пользователя</h2>
+<h3>{{title}}</h3>
+<div class="profile-container">
+    <div class="obj-container">
+        <a href="{{links.user_site_link}}"><h3>Website-user</h3></a>
+        <p>(необходим для доступа к сайту по паролю)</p>
+        {% for key, value in profile.website_user.items %}
+            <div class="table-row">
+                <div class="table-cell">{{ key }}</div>
+                <div class="table-cell">{{ value }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="obj-container">
+        <a href="{{links.profile_link}}"><h3>Website-Profile</h3></a>
+        <p>(дополнительная информация о пользователе на сайте)</p>
+        {% for key, value in profile.website_profile.items %}
+            <div class="table-row">
+                <div class="table-cell">{{ key }}</div>
+                <div class="table-cell">{{ value }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="obj-container">
+        <a href="{{links.telegram_user_link}}"><h3>Bot-telegram-user</h3></a>
+        <p>(Интерфейс телеграм бота для пользователя из телеграма)</p>
+        {% for key, value in profile.bot_telegram_user.items %}
+            <div class="table-row">
+                <div class="table-cell">{{ key }}</div>
+                <div class="table-cell">{{ value }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="obj-container">
+        <a href="{{links.web_user_link}}"><h3>Bot-web-user</h3></a>
+        <p>(Интерфейс телеграм бота для пользователя из веб-приложения)</p>
+        {% for key, value in profile.bot_web_user.items %}
+            <div class="table-row">
+                <div class="table-cell">{{ key }}</div>
+                <div class="table-cell">{{ value }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if profile.meta %}
+        <div class="obj-container">
+            <h3>Meta (Скоро выпилю)</h3>
+            {% for key, value in profile.meta.items %}
+                <div class="table-row">
+                    <div class="table-cell">{{ value.field }}</div>
+                    <div class="table-cell">{{ value.value }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

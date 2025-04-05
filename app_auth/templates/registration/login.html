@@ -1,0 +1,32 @@
+{% extends 'components/base.html' %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<div class="container">
+
+    <form method="post" class="order-form max_length">
+        {% csrf_token %}
+    <h2 class="mark-main-color">Вход</h2>
+            {% for field in form %}
+            <div class="row-container">
+                <div class="input-container">
+                    <label for="{{ field.id_for_label }}" class="input_explain">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            </div>
+            {% endfor %}
+        {% if form.non_field_errors %}
+        <div class="error">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <button type="submit" class="submit-button">Вход</button>
+        <div class="register-link">
+            <div>Нет учетной записи?</div>
+            <div><a href="{% url 'signup' %}" class="mark-main-color">Регистрация</a></div>
+            <div>Забыли пароль?</div>
+            <div><a href="{% url 'repair_password' %}" class="mark-main-color">Восстановление</a></div>
+        </div>
+    </form>
+
+</div>
+{% endblock %}
