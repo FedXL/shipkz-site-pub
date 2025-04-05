@@ -3,10 +3,7 @@
 *.pyo
 *.pyd
 __pycache__/
-db.dockerfile
-docker-compose.yml
-Dockerfile
-Dockerfile.dev
+
 mydump.sql
 *.env
 .venv
