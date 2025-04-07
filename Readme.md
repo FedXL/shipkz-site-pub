@@ -1,4 +1,3 @@
-# Site Code Example shipkz.ru
 
 ## Описание
 
