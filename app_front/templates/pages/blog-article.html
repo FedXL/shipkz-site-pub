@@ -1,0 +1,16 @@
+{% extends 'components/base.html' %}
+{% block title %}{{title}}{% endblock %}
+{% block meta_description %}
+{% endblock %}
+{% block content %}
+{% load static %}
+
+    <h1>{{name}}</h1>
+<p>{{content}}</p>
+{% include 'components/mini_messanger.html' %}
+<script>
+    const wsUrl = '{{ wss_url|safe }}';
+</script>
+<script src="{% static 'js/messanger/support_wss.js' %}">
+</script>
+{% endblock %}

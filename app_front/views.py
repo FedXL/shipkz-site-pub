@@ -13,7 +13,7 @@ from app_auth.mixins import ActiveUserConfirmMixin
 from app_auth.mixins import EmailVerificationRequiredMixin
 from app_auth.models import Profile
 from app_bot.management.bot_core import sync_bot
-from app_front.forms import UnregisteredOrderForm, OrderForm, RegisterOrderItemForm, RegisterOrderItemFormSet
+from app_front.forms import UnregisteredOrderForm, OrderForm, RegisterOrderItemFormSet
 from app_front.management.orders.orders_handler import get_orders_by_username_pre, get_orders_by_username_full, \
     body_parser
 from app_front.management.unregister_authorization.token import check_token, handle_no_token_comeback_version, \
@@ -172,6 +172,7 @@ class LkCreateOrderPageView(ActiveUserConfirmMixin,EmailVerificationRequiredMixi
             'form': order_form,
             'formset': formset,
         })
+
     def post(self, request):
         form = OrderForm(request.POST)
         formset = RegisterOrderItemFormSet(request.POST)

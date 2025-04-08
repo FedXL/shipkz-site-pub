@@ -1,4 +1,4 @@
-from django.urls import path, reverse_lazy
+from django.urls import path, reverse_lazy, include
 from django.views.generic import TemplateView, RedirectView
 from app_front.views import StartingPageView, KazakhstanPageView, TradeinnPageView, AboutUsPageView, ContactsPageView, \
     TariffsPageView, LkHelloPageView, LkCreateOrderPageView, LkOrdersPageView, LkPreordersPageView, LkProfilePageView, \
@@ -15,6 +15,7 @@ urlpatterns = [
     path('tranzit-kz/', KazakhstanPageView.as_view(), name='kazakhstan'),
     path('kazakhstan/', RedirectView.as_view(url=reverse_lazy('kazakhstan'), permanent=True)),
     path('tradeinn/', TradeinnPageView.as_view(), name='trade_inn'),
+    path('blog/', include('app_blog.urls')),
     path('trade_inn/', RedirectView.as_view(url=reverse_lazy('trade_inn'), permanent=True)),
     path('about/', AboutUsPageView.as_view(), name='about_us'),
     path('contacts/', ContactsPageView.as_view(), name='contacts'),

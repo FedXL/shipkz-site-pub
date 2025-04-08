@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'captcha',
     'django_celery_beat',
     'seo.apps.SeoConfig',
+    'app_blog.apps.AppBlogConfig',
 ]
 
 if DEPLOY_VERSION:

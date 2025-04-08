@@ -1,0 +1,108 @@
+{% extends 'components/base.html' %}
+{% load static %}
+{% block title %}Блог{% endblock %}
+{% block meta_description %}
+    Статьи о доставке грузов в Казахстане и по всему миру.
+{% endblock %}
+
+{% block content %}
+<style>
+    .pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination .step-links a {
+    margin: 0 5px;
+    padding: 8px 12px;
+    background-color: #eee;
+    border-radius: 8px;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination .step-links a:hover {
+    background-color: #ddd;
+}
+
+.pagination .current {
+    font-weight: bold;
+    margin: 0 10px;
+}
+    .content-block {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.article-container {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.article-container:hover {
+    transform: translateY(-4px);
+}
+
+.article-container h2 {
+    font-size: 20px;
+    color: #333;
+}
+
+.article-container p {
+    color: #666;
+    font-size: 16px;
+}
+
+.article-container a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.article-container a:hover {
+    text-decoration: underline;
+}
+</style>
+
+
+    <h1>Блог</h1>
+
+    <div class="content-block">
+        {% for article in articles %}
+            <div class="article-container">
+                <h2>{{ article.title }}</h2>
+                <p>{{ article.content|truncatewords:50 }}</p>
+                <a href="{% url 'blog_article' slug=article.name %}">Читать далее</a>
+
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">« Первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">‹ Назад</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Вперёд ›</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Последняя »</a>
+        {% endif %}
+    </div>
+
+    {% include 'components/mini_messanger.html' %}
+    <script>
+        const wsUrl = '{{ wss_url|safe }}';
+    </script>
+    <script src="{% static 'js/messanger/support_wss.js' %}"></script>
+
+{% endblock %}
