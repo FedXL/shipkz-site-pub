@@ -13,5 +13,6 @@ urlpatterns = [
     path('panel/', include('panel.urls')),
     path('api/v1/',include('app_api.urls')),
     path('captcha/', include('captcha.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('yandex_50e907a0d24e53ea.html', YandexVerification.as_view(), name='yandex-verification'),
 ]

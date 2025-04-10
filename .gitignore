@@ -22,7 +22,7 @@ app_front/management/google_sheets/credentials.json.old.bak.bak
 /legacy/legacy_codebase/chromedriver-win32/
 /legacy/legacy_codebase/chromedriver-linux64/
 /app_front/templates/pages/yandex_50e907a0d24e53ea.html
-/parsing/
+
 env/
 venv/
 .env

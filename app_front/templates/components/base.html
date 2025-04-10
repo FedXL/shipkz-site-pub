@@ -115,9 +115,11 @@ body {
                 <div class="menu-item">
                     <a href="{% url 'kazakhstan' %}">Транзит через Казахстан</a>
                 </div>
+                {% if user.is_superuser %}
                 <div class="menu-item">
                     <a href="{% url 'blog_home' %}">Статьи</a>
                 </div>
+                {% endif %}
                 <div class="menu-item">
                     <a href="{% url 'about_us' %}">О нас</a>
                 </div>

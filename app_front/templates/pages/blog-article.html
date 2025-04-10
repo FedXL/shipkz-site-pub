@@ -5,8 +5,8 @@
 {% block content %}
 {% load static %}
 
-    <h1>{{name}}</h1>
-<p>{{content}}</p>
+<h1>{{name}}</h1>
+<div>{{ content|safe }}</div>
 {% include 'components/mini_messanger.html' %}
 <script>
     const wsUrl = '{{ wss_url|safe }}';

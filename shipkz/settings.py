@@ -4,15 +4,12 @@ import redis
 from dotenv import load_dotenv
 import time
 load_dotenv()
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 VERSION = os.getenv('VERSION')
 DEPLOY_VERSION = True
 DEBUG = False
 CSRF_COOKIE_HTTPONLY = False
-
-
 if DEPLOY_VERSION:
     CSRF_COOKIE_SAMESITE = 'None'
     SESSION_COOKIE_SECURE = True
@@ -26,7 +23,6 @@ else:
     BASE_URL = ""
     BASE_URL_HOST = f"127.0.0.1"
 
-
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1",
@@ -38,16 +34,14 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1",
     "http://localhost",
     "https://shipkz.ru",
-    "https://www.shipkz.ru",
-    ]
+    "https://www.shipkz.ru"
+]
 ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
                  'supportstation.kz',
                  'shipkz.ru',
                  'www.shipkz.ru']
-
 AUTH_USER_MODEL = 'app_auth.CustomUser'
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -69,6 +63,8 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'seo.apps.SeoConfig',
     'app_blog.apps.AppBlogConfig',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 if DEPLOY_VERSION:
@@ -96,7 +92,6 @@ else:
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     ]
 
 ROOT_URLCONF = 'shipkz.urls'
@@ -212,7 +207,26 @@ if DEBUG:
 else:
     WSS_URL = 'wss://shipkz.ru/ws/support/'
 
-
 REDIS_HOST = "redis"
 REDIS_PORT = 6379
 REDIS_CHANNEL = "menu"
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+# (необязательно, но можно указать настройки):
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+        'height': 400,
+        'width': '100%',
+        'extraPlugins': 'codesnippet',
+        'toolbar_Full': [
+            ['Source', '-', 'Bold', 'Italic', 'Underline', 'Strike', '-', 'Link', 'Unlink', 'Image', '-', 'CodeSnippet'],
+            ['Undo', 'Redo', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Format', 'Font', 'FontSize'],
+            ['TextColor', 'BGColor'],
+        ],
+    },
+    'extraPlugins': 'sourcearea',
+}

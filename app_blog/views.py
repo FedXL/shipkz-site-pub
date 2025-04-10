@@ -1,8 +1,8 @@
-from django.core.paginator import Paginator
+from cachetools.func import lru_cache
+from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView
-from httplib2 import Response
 from app_blog.models import Article
 
 
@@ -14,22 +14,24 @@ class BlogHomeView(ListView):
     ordering = ['-created_at']
 
 
+@lru_cache(maxsize=2)
 def get_article_context(slug):
-    arcticle_object = Article.objects.filter(name=slug).first()
-    if not arcticle_object:
-        return Response(status=404)
+    article_object = Article.objects.filter(name=slug).first()
+    if not article_object:
+        return None
     context = {
-        "title": arcticle_object.title,
-        "photo_title": arcticle_object.photo_title,
-        "photo": arcticle_object.photo,
-        "content": arcticle_object.content,
-        "created_at": arcticle_object.created_at
+        "title": article_object.title,
+        "photo_title": article_object.photo_title,
+        "content": article_object.content,
+        "created_at": article_object.created_at
     }
     return context
 
 
-class BlogArcticleView(View):
+class BlogArticleView(View):
     def get(self, request, *args, **kwargs):
         slug = kwargs.get('slug')
         article_context = get_article_context(slug)
-        return render(request,template_name='pages/blog-article.html', context=article_context)
+        if not article_context:
+            return HttpResponseNotFound("Article not found")
+        return render(request, template_name='pages/blog-article.html', context=article_context)
