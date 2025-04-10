@@ -13,4 +13,5 @@
 [mini_messanger.html](app_front/templates/components/mini_messanger.html)
 посмотреть как работает можно тут https://shipkz.ru
 
-[![wakatime](https://wakatime.com/badge/github/FedXL/shipkz.svg)](https://wakatime.com/badge/github/FedXL/shipkz)
+
+[![wakatime](https://wakatime.com/badge/github/FedXL/shipkz_public.svg)](https://wakatime.com/badge/github/FedXL/shipkz_public)
